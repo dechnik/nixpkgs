@@ -6,9 +6,12 @@
   setuptools-scm,
   interegular,
   cloudpickle,
+  datasets,
   diskcache,
   joblib,
   jsonschema,
+  pyairports,
+  pycountry,
   pydantic,
   lark,
   nest-asyncio,
@@ -38,6 +41,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = [
     interegular
     cloudpickle
+    datasets
     diskcache
     joblib
     jsonschema
@@ -48,9 +52,14 @@ buildPythonPackage rec {
     scipy
     torch
     transformers
+    pycountry
+    pyairports
   ];
 
-  pythonImportsCheck = [ "outlines" ];
+  checkPhase = ''
+    export HOME=$(mktemp -d)
+    python3 -c 'import outlines'
+  '';
 
   meta = with lib; {
     description = "Structured text generation";
